@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Calculadora beta</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+    <div class="contenedorPrincipal">
+        <input type="text" name="operacion" id="operacion" class="operacion">
+        <div class="contenedorSec">
+            <div class="Contenedor1num">
+            <button id="numero" class="numero" onclick="botonnumerico('1')"> 1 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('2')"> 2 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('3')"> 3 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('+')"> + </button>
+            <button id="numero" class="borrar" onclick="borrar()"> borrar </button>
+        </div>
+        <div class="Contenedor1num">
+            <button id="numero" class="numero" onclick="botonnumerico('4')"> 4 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('5')"> 5 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('6')"> 6 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('-')"> - </button>
+        </div>
+        <div class="Contenedor1num">
+            <button id="numero" class="numero" onclick="botonnumerico('7')"> 7 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('8')"> 8 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('9')"> 9 </button>
+            <button id="numero" class="numero" onclick="botonnumerico('/')"> / </button>
+        </div>
+        <div class="Contenedor1num">
+            <button id="numero" class="numero" onclick="botonnumerico(',')"> , </button>
+            <button id="numero" class="numero" onclick="botonnumerico('0')"> 0 </button>
+            <button id="numero" class="numero" onclick="calcular()"> = </button>
+            <button id="numero" class="numero" onclick="botonnumerico('*')"> * </button>
+        </div>
+        </div>
+    </div>
+</body>
+<script src="funciones.js"></script>
+</html>
