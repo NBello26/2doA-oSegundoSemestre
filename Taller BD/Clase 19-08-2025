@@ -1,0 +1,65 @@
+--PRIMER PLSQL
+--Nombre, apellido, salario y departamento del empleado
+--Cursor
+--Todos los empleados pertenecen al departamento 60 Y SUELDO > 5000
+--Bloque simple
+--Mostrar consola
+SET SERVEROUTPUT ON;
+DECLARE
+
+CURSOR CUR_EMP(
+    P_ID_DEP EMPLOYEES.DEPARTMENT_ID%TYPE, 
+    P_SUELDO EMPLOYEES.SALARY%TYPE) 
+    IS 
+    SELECT 
+        FIRST_NAME,
+        LAST_NAME,
+        SALARY,
+        DEPARTMENT_ID
+        FROM EMPLOYEES
+        WHERE (DEPARTMENT_ID = P_ID_DEP) AND (SALARY > P_SUELDO);
+
+Begin
+    FOR REC_EMP IN CUR_EMP(60,5000) LOOP
+    DBMS_OUTPUT.PUT_LINE('El nombre del empleado es: ' || REC_EMP.FIRST_NAME);
+    DBMS_OUTPUT.PUT_LINE('El apellido del empleado es: ' || REC_EMP.LAST_NAME);
+    DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || REC_EMP.SALARY);
+    DBMS_OUTPUT.PUT_LINE('El departamento del empleado es: ' || REC_EMP.DEPARTMENT_ID);
+    DBMS_OUTPUT.PUT_LINE('');
+    END LOOP;
+
+END;
+
+
+--Segundo PLSQL
+--Nombre, apellido, salario y nombre del departamento del empleado
+--Cursor
+--Todos los empleados QUE TRABAJAN COMO programmer
+--Bloque simple
+--Mostrar consola
+SET SERVEROUTPUT ON;
+DECLARE
+
+CURSOR CUR_EMP(
+    P_NOM_JOB JOBS.JOB_TITLE%TYPE) 
+    IS 
+    SELECT 
+        E.FIRST_NAME || ' ' ||E.LAST_NAME as EMP_NOMBRE,
+        E.SALARY,
+        D.DEPARTMENT_NAME,
+        J.JOB_TITLE
+        FROM EMPLOYEES E
+        INNER JOIN DEPARTMENTS D ON E.DEPARTMENT_ID = D.DEPARTMENT_ID
+        INNER JOIN JOBS J ON E.JOB_ID = J.JOB_ID
+        WHERE (J.JOB_TITLE = P_NOM_JOB);
+
+Begin
+    FOR REC_EMP IN CUR_EMP('Programmer') LOOP
+    DBMS_OUTPUT.PUT_LINE('El nombre completo del empleado es: ' || REC_EMP.EMP_NOMBRE);
+    DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || REC_EMP.SALARY);
+    DBMS_OUTPUT.PUT_LINE('El departamento del empleado es: ' || REC_EMP.DEPARTMENT_NAME);
+    DBMS_OUTPUT.PUT_LINE('El trabajo del empleado es: ' || REC_EMP.JOB_TITLE);
+    DBMS_OUTPUT.PUT_LINE('');
+    END LOOP;
+
+END;
