@@ -1,0 +1,59 @@
+//primer ejemplo
+
+fun main() {
+    //val es una variable constante
+    val nombre: String = "Kotlin"
+    val version = "2.0"
+    var year = 2025 //var es una variable que puede cambiar su valor
+    year = year + 1
+    val grande = 10_000_000
+    println("Hola mundo $nombre $version año= $year, número extenso = $grande")
+}
+
+//segundo ejemplo
+
+fun main() {
+    //Numeros en kotlin
+    val a: Int = 7
+    val b: Int = 2
+    val c: Long = 9L //Long tengo que usar el sufijo l, long son numeros mas largos
+    
+    val suma = a+b
+    val resta = a-b
+    val division = a/b
+    val multiplicacion = a*b
+    val mod = a%b //modulo o residuo %
+    
+    //División real convertir tipo de dato
+    val divReal = a.toDouble()/b //  7.0/2 = 3.5
+    
+    var contador = 10
+    contador++
+    contador++
+    contador-- //11
+    
+    println("Suma = $suma, resta = $resta, division = $division, multiplicacion = $multiplicacion, mod = $mod, divReal = $divReal, contador = $contador")
+}
+
+
+//tercer ejemplo
+
+fun main() {
+    val x: Float = 3.5F
+    val y: Double = 1.2 //defecto souble
+    
+    val suma = x+y
+    val multiplicacion= x*y 
+    val division= x/y
+    
+    //Ejemplo de presicion
+    val p = 0.1+0.2 // 0.300000000000004
+    
+    
+    println("Suma = $suma, division = $division, multiplicacion = $multiplicacion, Ejemplo presicion = $p ")
+    
+    //Formateando usando stringFormat
+    val formateado = String.format("%.2f",p)
+    println("Formateando $formateado")
+}
+
