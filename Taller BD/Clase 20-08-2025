@@ -38,3 +38,45 @@ Begin
     END LOOP;
 
 END;
+
+
+--Segundo plsql
+
+--Objetivo: Crear cursores
+-- anidados para procesar
+-- Tipos de trabajos(job) y sus
+-- empleados(emp), nombre y apellido
+
+--PRIMER PLSQL
+SET SERVEROUTPUT ON;
+DECLARE
+
+CURSOR CUR_JOB
+    IS 
+    SELECT DISTINCT(JOB_ID)
+        FROM EMPLOYEES
+        WHERE JOB_ID IS NOT NULL
+        ORDER BY JOB_ID;
+
+CURSOR CUR_EMP(
+    P_ID_JOB EMPLOYEES.JOB_ID%TYPE)
+    IS 
+    SELECT 
+        FIRST_NAME || ' ' ||LAST_NAME as EMP_NOMBRE,
+        SALARY
+        FROM EMPLOYEES
+        WHERE (JOB_ID = P_ID_JOB);
+Begin
+    FOR REC_JOB IN CUR_JOB LOOP
+        DBMS_OUTPUT.PUT_LINE('***************');
+        DBMS_OUTPUT.PUT_LINE('Empleados con trabajo de ' || REC_JOB.JOB_ID);
+        FOR REC_EMP IN CUR_EMP(REC_JOB.JOB_ID) LOOP
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('El nombre completo del empleado es: ' || REC_EMP.EMP_NOMBRE);
+            DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || REC_EMP.SALARY);
+            DBMS_OUTPUT.PUT_LINE('');
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('***************');
+    END LOOP;
+
+END;
