@@ -1,0 +1,40 @@
+--Objetivo: Crear cursores
+-- anidados para procesar
+-- departamentos(dept) y sus
+-- empleados(emp)
+
+--PRIMER PLSQL
+SET SERVEROUTPUT ON;
+DECLARE
+
+CURSOR CUR_DEP
+    IS 
+    SELECT DISTINCT(DEPARTMENT_ID)
+        FROM EMPLOYEES
+        WHERE DEPARTMENT_ID IS NOT NULL
+        ORDER BY DEPARTMENT_ID;
+
+CURSOR CUR_EMP(
+    P_ID_DEP EMPLOYEES.DEPARTMENT_ID%TYPE)
+    IS 
+    SELECT 
+        FIRST_NAME,
+        LAST_NAME,
+        SALARY
+        FROM EMPLOYEES
+        WHERE (DEPARTMENT_ID = P_ID_DEP);
+Begin
+    FOR REC_DEP IN CUR_DEP LOOP
+        DBMS_OUTPUT.PUT_LINE('***************');
+        DBMS_OUTPUT.PUT_LINE('Empleados en el departamento: ' || REC_DEP.DEPARTMENT_ID);
+        FOR REC_EMP IN CUR_EMP(REC_DEP.DEPARTMENT_ID) LOOP
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('El nombre del empleado es: ' || REC_EMP.FIRST_NAME);
+            DBMS_OUTPUT.PUT_LINE('El apellido del empleado es: ' || REC_EMP.LAST_NAME);
+            DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || REC_EMP.SALARY);
+            DBMS_OUTPUT.PUT_LINE('');
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('***************');
+    END LOOP;
+
+END;
