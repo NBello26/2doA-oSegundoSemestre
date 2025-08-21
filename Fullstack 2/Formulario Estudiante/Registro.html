@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Registro de estudiantes</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+    <form id="formEstudiante">
+        <h1> Formulario Estudiante</h1>
+        <br>
+        <label for="nombre"> Ingrese su nombre</label>
+        <input type="text" id="nombre" name="nombre" required placeholder="Ingrese su nombre">
+        <br>
+        <label for="correo"> Ingrese su correo</label>
+        <input type="text" id="correo" name="correo" required placeholder="aaaaa123@gmail.com">
+        <br>
+        <label for="edad"> Ingrese su edad</label>
+        <input type="number" id="edad" required name="edad">
+        <br>
+        <label for="fechanacimiento" > Ingrese su fecha de nacimiento</label>
+        <input type="date" id="fechanacimiento" name="fechanacimiento">
+        <br>
+        <br>
+        <label for="genero"> Genero: </label>
+        <input type="radio" name="genero" id="Masculino" value="Masculino">
+        <label> Masculino </label>
+        <input type="radio" name="genero" id="Femenino" value="Femenino">
+        <label> Femenino </label>
+        <input type="radio" name="genero" id="otro" value="otro">
+        <label> Otro </label>
+        <br>
+        <p>Seleccione lenguajes</p>
+        <input type="checkbox" id="js" value="js" name="asignaturas">
+        <label for="js"> JS</label>
+        <input type="checkbox" id="html" value="html" name="asignaturas">
+        <label for="html"> HTML</label>
+        <input type="checkbox" id="css" value="css" name="asignaturas">
+        <label for="css"> CSS</label>
+        <input type="checkbox" id="java" value="java" name="asignaturas">
+        <label for="java"> JAVA </label>
+        <br>
+        <br>
+        <label for="curso"> Seleccione curso</label>
+        <br>
+        <select name="curso" id="curso">
+            <option value="Frontend"> FrontEnd</option>
+            <option value="Backend">BackEnd</option>
+            <option value="Fullstack">FullStack</option>
+        </select>
+        <br>
+        <br>
+
+        <textarea name="comentario" id="comentario" rows="4" cols="30"> Ingrese un comentario</textarea>
+        <br>
+        <br>
+
+        <input type="checkbox" name="terminos" id="terminos" required>
+        <label for="terminos"> Acepto terminos y condiciones </label>
+        <br>
+        <br>
+
+        <button type="submit"> Enviar </button>
+    </form>
+
+</body>
+<script src="funciones.js"></script>
+</html>
