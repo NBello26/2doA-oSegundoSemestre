@@ -1,0 +1,40 @@
+--No data FOUND
+SET SERVEROUTPUT ON;
+DECLARE 
+
+    V_PNOMBRE EMPLOYEES.FIRST_NAME%TYPE;
+    V_PAPELLIDO EMPLOYEES.LAST_NAME%TYPE;
+    V_SUELDO EMPLOYEES.SALARY%TYPE;
+    
+BEGIN
+
+    FOR I IN 1..150 LOOP
+    
+        BEGIN
+        
+            SELECT 
+            FIRST_NAME,
+            LAST_NAME,
+            SALARY
+            INTO
+            V_PNOMBRE,
+            V_PAPELLIDO,
+            V_SUELDO
+            FROM EMPLOYEES
+            WHERE EMPLOYEE_ID=I;
+            
+            DBMS_OUTPUT.PUT_LINE('El nombre del empleado es: ' || V_PNOMBRE || ' '|| V_PAPELLIDO);
+            DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || V_SUELDO);
+            DBMS_OUTPUT.PUT_LINE(' ');
+            
+            EXCEPTION
+                WHEN NO_DATA_FOUND THEN
+                DBMS_OUTPUT.PUT_LINE('El usuario que esta buscando no existe en la base de datos');
+                
+        END;
+        
+    END LOOP;
+    
+END;
+
+
