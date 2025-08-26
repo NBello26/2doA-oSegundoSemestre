@@ -38,3 +38,46 @@ BEGIN
 END;
 
 
+
+---- FALTA
+--Cursor principal todos los departamentos
+--Cursor 2 firstname,lastname,salary
+--Ingresar parametro del departamento
+--Manejar exception cuando no exista empleado
+--No existe empleado asosiado al departamento
+
+SET SERVEROUTPUT ON;
+DECLARE
+
+CURSOR CUR_DEP
+    IS 
+    SELECT DISTINCT(DEPARTMENT_ID)
+        FROM EMPLOYEES
+        WHERE DEPARTMENT_ID IS NOT NULL
+        ORDER BY DEPARTMENT_ID;
+
+CURSOR CUR_EMP
+    IS 
+    SELECT 
+        FIRST_NAME || ' ' ||LAST_NAME as EMP_NOMBRE,
+        SALARY
+        FROM EMPLOYEES;
+Begin
+    FOR REC_DEP IN CUR_DEP LOOP
+        DBMS_OUTPUT.PUT_LINE('***************');
+        DBMS_OUTPUT.PUT_LINE('Empleados con departamento de ' || REC_DEP.DEPARTMENT_ID);
+        FOR REC_EMP IN CUR_EMP LOOP
+        BEGIN
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('El nombre completo del empleado es: ' || REC_EMP.EMP_NOMBRE);
+            DBMS_OUTPUT.PUT_LINE('El sueldo del empleado es: ' || REC_EMP.SALARY);
+            DBMS_OUTPUT.PUT_LINE('');
+            EXCEPTION 
+            WHEN NO_DATA_FOUND THEN
+                DBMS_OUTPUT.PUT_LINE('El usuario'|| REC_EMP.EMP_NOMBRE ||' que esta buscando no existe en el departamento ' ||REC_DEP.DEPARTMENT_ID);
+        END;
+        END LOOP;
+        DBMS_OUTPUT.PUT_LINE('***************');
+    END LOOP;
+
+END;
