@@ -1,0 +1,14 @@
+--Excepcion creada por nosotros
+SET SERVEROUTPUT ON;
+DECLARE
+edad_inf EXCEPTION;
+v_edad NUMBER:=15;
+BEGIN
+    IF(v_edad<15)THEN
+     RAISE edad_inf;
+    END IF;
+        DBMS_OUTPUT.PUT_LINE('Acceso permitido');
+    EXCEPTION
+    WHEN edad_inf THEN
+        DBMS_OUTPUT.PUT_LINE('Edad insuficiente, Acceso denegado ');
+END;
