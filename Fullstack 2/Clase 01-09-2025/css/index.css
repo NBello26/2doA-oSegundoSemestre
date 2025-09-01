@@ -1,0 +1,9 @@
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+p.description {
+    font-size: 1.2em;
+    color: #555;
+}
