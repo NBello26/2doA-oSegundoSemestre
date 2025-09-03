@@ -5,4 +5,13 @@ IS
 BEGIN
     UPDATE EMPLOYEES SET SALARY = p_sal
     WHERE EMPLOYEE_ID = p_id_emp;
+    COMMIT;
 END;
+
+--Ejecutar procedimiento 
+
+BEGIN
+UpdateSalary(100,25000);
+END;
+
+
