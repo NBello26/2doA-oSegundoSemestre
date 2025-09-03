@@ -15,3 +15,34 @@ UpdateSalary(100,25000);
 END;
 
 
+---Procedimiento
+-- Actualiza el nombre del empleado y el salario,
+--Si el salario es mayor a 25000, no se debe actualizar
+
+
+CREATE OR REPLACE PROCEDURE UpdateSalaryName(p_id_emp IN NUMBER, p_sal IN NUMBER,p_nombre IN VARCHAR2)
+IS
+
+BEGIN
+    UPDATE EMPLOYEES SET FIRST_NAME = p_nombre
+    WHERE EMPLOYEE_ID = p_id_emp;
+    IF p_sal <= 25000 THEN
+        UPDATE EMPLOYEES SET SALARY = p_sal
+        WHERE EMPLOYEE_ID = p_id_emp;
+        DBMS_OUTPUT.PUT_LINE('El salario ingresado '|| p_sal || '< 25000, por lo tanto el empleado fue actualizado exitosamente');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('El salario ingresado '|| p_sal || '> 25000, por lo tanto no se pudo actualizar el empleado');
+    END IF;
+    COMMIT;
+END;
+
+
+-- Ejecutando codigo
+
+SET SERVEROUTPUT ON;
+BEGIN
+UpdateSalaryName(100,25000,'Stephen');
+END;
+
+
+
