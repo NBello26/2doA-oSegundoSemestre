@@ -1,0 +1,8 @@
+---Creando un procedimiento 
+CREATE OR REPLACE PROCEDURE UpdateSalary(p_id_emp IN NUMBER, p_sal IN NUMBER)
+IS
+
+BEGIN
+    UPDATE EMPLOYEES SET SALARY = p_sal
+    WHERE EMPLOYEE_ID = p_id_emp;
+END;
