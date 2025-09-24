@@ -1,0 +1,86 @@
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION aumentar_salario (
+    p_salario NUMBER
+)
+RETURN NUMBER
+IS  
+    v_resultado NUMBER;
+BEGIN
+    -- Lógica de la función
+    IF p_salario < 25000 THEN
+        v_resultado := p_salario * 1.15; -- Ejemplo: suma de parámetros
+        DBMS_OUTPUT.PUT_LINE('El salario fue aumentado en un 15%');
+    ELSE
+        v_resultado := p_salario;
+        DBMS_OUTPUT.PUT_LINE('El salario no fue aumentado');
+    END IF;
+    
+    RETURN v_resultado;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de errores
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RETURN NULL; -- o un valor por defecto
+END;
+
+
+
+--------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION concatenar_nombre (
+    p_nombre VARCHAR2,
+    p_apellido VARCHAR2
+)
+RETURN VARCHAR2
+IS
+    nombre_null EXCEPTION;
+    v_resultado VARCHAR2(1000);
+BEGIN
+    -- Lógica de la función
+    IF p_nombre IS NOT NULL AND p_apellido IS NOT NULL THEN
+        v_resultado := p_nombre || ' ' || p_apellido; -- Ejemplo: suma de parámetros
+        DBMS_OUTPUT.PUT_LINE('El nombre completo sera: ' || v_resultado);
+    ELSE
+        RAISE nombre_null;
+    END IF;
+
+    RETURN v_resultado;
+EXCEPTION
+    WHEN nombre_null THEN
+        DBMS_OUTPUT.PUT_LINE('Error: El nombre o apellido son nulos');
+    WHEN OTHERS THEN
+        -- Manejo de errores
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RETURN NULL; -- o un valor por defecto
+END;
+
+
+-------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE actualizar_empleado(
+  p_id NUMBER
+) IS
+
+
+BEGIN
+
+  SELECT SALARY, FIRST_NAME,LAST_NAME
+    INTO p_salario, p_nombre, p_apellido
+    FROM EMPLOYEES
+    WHERE EMPLOYEE_ID = p_id;
+
+  aumentar_salario(p_salario);
+  concatenar_nombre(p_nombre,p_apellido);
+  
+  UPDATE employees 
+
+  SET first_name = p_nombre, 
+
+    last_name = p_apellido,
+
+    salary = p_salario
+
+  WHERE employee_id = p_id;
+
+   
+
+  DBMS_OUTPUT.PUT_LINE('Empleado actualizado completamente');
+END;
