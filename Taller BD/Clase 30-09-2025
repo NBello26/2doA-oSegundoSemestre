@@ -1,0 +1,90 @@
+CREATE OR REPLACE PACKAGE pck_empleados is 
+    FUNCTION aumentar_salario(p_porcentaje IN NUMBER,p_salario IN NUMBER);
+    FUNCTION concatenar_nombre(p_nombre IN NUMBER,p_apellido IN NUMBER);
+    
+
+--------------------------------------------
+SET SERVEROUTPUT ON;
+CREATE OR REPLACE FUNCTION aumentar_salario (
+    p_porcentaje NUMBER,
+    p_salario NUMBER
+)
+RETURN NUMBER
+IS  
+    v_resultado NUMBER;
+BEGIN
+    -- Lógica de la función
+    IF p_salario < 25000 THEN
+        v_resultado := p_salario * p_porcentaje; -- Ejemplo: suma de parámetros
+        DBMS_OUTPUT.PUT_LINE('El salario inicial '|| p_salario ||' fue aumentado en un ' || p_porcentaje ||'%');
+        DBMS_OUTPUT.PUT_LINE('El salario final: '|| v_resultado );
+    ELSE
+        v_resultado := p_salario;
+        DBMS_OUTPUT.PUT_LINE('El salario no fue aumentado');
+    END IF;
+    
+    RETURN v_resultado;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Manejo de errores
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RETURN NULL; -- o un valor por defecto
+END;
+--------------------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION concatenar_nombre (
+    p_nombre VARCHAR2,
+    p_apellido VARCHAR2
+)
+RETURN VARCHAR2
+IS
+    nombre_null EXCEPTION;
+    v_resultado VARCHAR2(1000);
+BEGIN
+    -- Lógica de la función
+    IF p_nombre IS NOT NULL AND p_apellido IS NOT NULL THEN
+        v_resultado := p_nombre || ' ' || p_apellido; -- Ejemplo: suma de parámetros
+        DBMS_OUTPUT.PUT_LINE('El nombre completo sera: ' || v_resultado);
+    ELSE
+        RAISE nombre_null;
+    END IF;
+
+    RETURN v_resultado;
+EXCEPTION
+    WHEN nombre_null THEN
+        DBMS_OUTPUT.PUT_LINE('Error: El nombre o apellido son nulos');
+    WHEN OTHERS THEN
+        -- Manejo de errores
+        DBMS_OUTPUT.PUT_LINE('Error: ' || SQLERRM);
+        RETURN NULL; -- o un valor por defecto
+END;
+
+
+-------------------------------------------------------------------------------------------------------------------
+CREATE OR REPLACE PROCEDURE actualizar_empleados IS
+p_salario NUMBER;
+p_por NUMBER := 1.15;
+p_nombre VARCHAR(30);
+p_apellido VARCHAR(30);
+p_nombrecompleto VARCHAR(60);
+CURSOR CUR_EMP
+    IS 
+    SELECT 
+        FIRST_NAME,
+        LAST_NAME,
+        SALARY as Sueldo
+        FROM EMPLOYEES;
+BEGIN
+    
+  FOR REC_EMP IN CUR_EMP LOOP
+      p_salario := aumentar_salario(p_por,REC_EMP.Sueldo);
+      p_nombrecompleto := concatenar_nombre(REC_EMP.FIRST_NAME,REC_EMP.LAST_NAME);
+      
+      UPDATE employees 
+      SET first_name = p_nombre, 
+        last_name = p_apellido,
+        salary = p_salario
+      WHERE employee_id = p_id;
+
+      DBMS_OUTPUT.PUT_LINE('Empleado actualizado completamente, nombre completo: ' || p_nombrecompleto);
+  END LOOP;
+END actualizar_empleados;
